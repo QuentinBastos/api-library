@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
+import errorHandler from     "./middlewares/errorHandler";
 
 import { RegisterRoutes } from "./routes/index"; // tsoa va générer ce fichier
 
@@ -21,8 +22,10 @@ app.use(
     },
   })
 );
+
+RegisterRoutes(app);
+app.use(errorHandler);
+
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
 });
-
-RegisterRoutes(app);
