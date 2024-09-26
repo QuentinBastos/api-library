@@ -39,6 +39,11 @@ export class BookController extends Controller {
 
   @Delete("{id}")
   public async deleteBook(id: number): Promise<void> {
+      if (!id) {
+          const error = new Error('ID not found');
+          (error as any).status = 400;
+          throw error;
+      }
       await bookService.deleteBook(id);
   }
 

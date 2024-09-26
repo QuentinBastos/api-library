@@ -33,9 +33,11 @@ export class BookService {
 
     public async deleteBook(id: number): Promise<void> {
         const book = await Book.findByPk(id);
-        if (book) {
-            await book.destroy();
+        if (!book) {
+
+            throw new Error("Author not found");
         }
+        await book.destroy();
     }
 
     public async updateBook(id: number, title?: string, publishYear?: number, authorId?: number, isbn?: string): Promise<Book | null> {

@@ -26,9 +26,10 @@ export class AuthorService {
   // Supprime un auteur par ID
   public async deleteAuthor(id: number): Promise<void> {
     const author = await Author.findByPk(id);
-    if (author) {
-      await author.destroy();
+    if (!author) {
+      throw new Error("Author not found");
     }
+    await author.destroy();
   }
 
   // Met à jour un auteur
