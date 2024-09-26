@@ -20,9 +20,7 @@ export class AuthorController extends Controller {
 
   // Crée un nouvel auteur
   @Post("/")
-  public async createAuthor(
-    @Body() requestBody: AuthorDTO
-  ): Promise<AuthorDTO> {
+  public async createAuthor(@Body() requestBody: AuthorDTO): Promise<AuthorDTO> {
     const { first_name, last_name } = requestBody;
     return authorService.createAuthor(first_name, last_name);
   }
@@ -35,10 +33,7 @@ export class AuthorController extends Controller {
 
   // Met à jour un auteur par ID
   @Patch("{id}")
-  public async updateAuthor(
-    @Path() id: number,
-    @Body() requestBody: AuthorDTO
-  ): Promise<AuthorDTO | null> {
+  public async updateAuthor(@Path() id: number, @Body() requestBody: AuthorDTO): Promise<AuthorDTO | null> {
     const { first_name, last_name } = requestBody;
     return authorService.updateAuthor(id, first_name, last_name);
   }

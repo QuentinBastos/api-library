@@ -7,15 +7,19 @@ export class AuthorService {
   }
 
   // Récupère un auteur par ID
-  public async getAuthorById(id: number): Promise<Author | null> {
-    return Author.findByPk(id);
+  public async getAuthorById(id: number): Promise<Author> {
+    const author = await authorService.getAuthorById(id);
+    if(!author){
+      const error = new Error('Author not found');
+      (error as any).status = 404;
+      throw error;
+    }
+    return author;
   }
 
+
   // Crée un nouvel auteur
-  public async createAuthor(
-    firstName: string,
-    lastName: string
-  ): Promise<Author> {
+  public async createAuthor(firstName: string, lastName: string): Promise<Author> {
     return Author.create({first_name: firstName, last_name: lastName });
   }
 
