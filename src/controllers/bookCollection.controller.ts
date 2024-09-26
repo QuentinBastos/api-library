@@ -1,4 +1,4 @@
-import { Controller, Get, Route, Tags, Post, Body, Path } from "tsoa";
+import {Controller, Get, Route, Tags, Post, Body, Path, Delete} from "tsoa";
 import { BookCollectionDTO } from "../dto/bookCollection.dto";
 import { BookCollectionService } from "../services/bookCollection.service";
 
@@ -33,6 +33,7 @@ export class BookCollectionController extends Controller {
             }
         });
     }
+    @Delete("{id}")
     public async deleteBookCollection(id: number): Promise<void> {
         if (!id) {
             const error = new Error("ID not found");
