@@ -20,16 +20,19 @@ export function expressAuthentication(
         return new Promise((resolve, reject) => {
             jwt.verify(token, JWT_SECRET!, (err: any, decoded: any) => {
                 if (err) {
-                    return reject(err);
+                    return reject(new Error('Token verification failed'));
                 } else {
-                    if (scopes) {
+                    if (scopes !== undefined) {
+                        const userScopes = decoded.scopes;
+
                         for (let scope of scopes) {
-                            if (!decoded.scopes.includes(scope)) {
-                                return reject(new Error('Insufficient scope'));
+                            const [resource, action] = scope.split(":");
+                            if (!userScopes[resource]?.includes(action)) {
+                                return reject(new Error('Insufficient permissions'));
                             }
                         }
                     }
-                    return resolve(decoded);
+                    resolve(decoded);
                 }
             });
         });

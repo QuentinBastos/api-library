@@ -1,66 +1,72 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Delete,
-  Route,
-  Path,
-  Body,
-  Tags,
-  Patch,
+    Controller,
+    Get,
+    Post,
+    Delete,
+    Route,
+    Path,
+    Body,
+    Tags,
+    Patch, Security,
 } from "tsoa";
-import { authorService } from "../services/author.service";
+import {authorService} from "../services/author.service";
 import {
-  AuthorInputDTO,
-  AuthorInputPatchDTO,
-  AuthorOutputDTO,
+    AuthorInputDTO,
+    AuthorInputPatchDTO,
+    AuthorOutputDTO,
 } from "../dto/author.dto";
-import { BookOutputDTO } from "../dto/book.dto";
+import {BookOutputDTO} from "../dto/book.dto";
 
 @Route("authors")
 @Tags("Authors")
 export class AuthorController extends Controller {
-  // Récupère tous les auteurs
-  @Get("/")
-  public async getAllAuthors(): Promise<AuthorOutputDTO[]> {
-    return authorService.getAllAuthors();
-  }
+    // Récupère tous les auteurs
+    @Get("/")
+    @Security("jwt", ["author:read"])
+    public async getAllAuthors(): Promise<AuthorOutputDTO[]> {
+        return authorService.getAllAuthors();
+    }
 
-  // Récupère un auteur par ID
-  @Get("{id}")
-  public async getAuthorById(@Path() id: number): Promise<AuthorOutputDTO> {
-    return authorService.getAuthorById(id);
-  }
+    // Récupère un auteur par ID
+    @Get("{id}")
+    @Security("jwt", ["author:read"])
+    public async getAuthorById(@Path() id: number): Promise<AuthorOutputDTO> {
+        return authorService.getAuthorById(id);
+    }
 
-  // Crée un nouvel auteur
-  @Post("/")
-  public async createAuthor(
-    @Body() requestBody: AuthorInputDTO,
-  ): Promise<AuthorOutputDTO> {
-    const { first_name, last_name } = requestBody;
-    return authorService.createAuthor(first_name, last_name);
-  }
+    // Crée un nouvel auteur
+    @Post("/")
+    @Security("jwt", ["admin:create"])
+    public async createAuthor(
+        @Body() requestBody: AuthorInputDTO,
+    ): Promise<AuthorOutputDTO> {
+        const {first_name, last_name} = requestBody;
+        return authorService.createAuthor(first_name, last_name);
+    }
 
-  // Supprime un auteur par ID
-  @Delete("{id}")
-  public async deleteAuthor(@Path() id: number): Promise<void> {
-    await authorService.deleteAuthor(id);
-  }
+    // Supprime un auteur par ID
+    @Delete("{id}")
+    @Security("jwt", ["admin:delete"])
+    public async deleteAuthor(@Path() id: number): Promise<void> {
+        await authorService.deleteAuthor(id);
+    }
 
-  // Met à jour un auteur par ID
-  @Patch("{id}")
-  public async updateAuthor(
-    @Path() id: number,
-    @Body() requestBody: AuthorInputPatchDTO,
-  ): Promise<AuthorOutputDTO> {
-    const { first_name, last_name } = requestBody;
-    return authorService.updateAuthor(id, first_name, last_name);
-  }
+    // Met à jour un auteur par ID
+    @Patch("{id}")
+    @Security("jwt", ["admin:update"])
+    public async updateAuthor(
+        @Path() id: number,
+        @Body() requestBody: AuthorInputPatchDTO,
+    ): Promise<AuthorOutputDTO> {
+        const {first_name, last_name} = requestBody;
+        return authorService.updateAuthor(id, first_name, last_name);
+    }
 
-  @Get("{id}/books")
-  public async getBooksByAuthorId(
-    @Path() id: number,
-  ): Promise<BookOutputDTO[]> {
-    return await authorService.getBooksByAuthorId(id);
-  }
+    @Get("{id}/books")
+    @Security("jwt", ["author:read"])
+    public async getBooksByAuthorId(
+        @Path() id: number,
+    ): Promise<BookOutputDTO[]> {
+        return await authorService.getBooksByAuthorId(id);
+    }
 }

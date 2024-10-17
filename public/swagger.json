@@ -257,21 +257,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"AuthenticationOutputDTO": {
-				"properties": {
-					"message": {
-						"type": "string"
-					},
-					"token": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"AuthenticationInputDTO": {
 				"properties": {
 					"grant_type": {
@@ -501,7 +486,13 @@
 				"tags": [
 					"BookCollections"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"bookCollection:create"
+						]
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -533,7 +524,13 @@
 				"tags": [
 					"BookCollections"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"bookCollection:read"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -563,7 +560,13 @@
 				"tags": [
 					"BookCollections"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"bookCollection:update"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -596,7 +599,13 @@
 				"tags": [
 					"BookCollections"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"bookCollection:delete"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -631,7 +640,13 @@
 				"tags": [
 					"Books"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"book:read"
+						]
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -651,7 +666,13 @@
 				"tags": [
 					"Books"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"book:create"
+						]
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -683,7 +704,13 @@
 				"tags": [
 					"Books"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"book:read"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -713,7 +740,13 @@
 				"tags": [
 					"Books"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"book:update"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -746,7 +779,13 @@
 				"tags": [
 					"Books"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"book:delete"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -781,7 +820,13 @@
 				"tags": [
 					"Books"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"book:read"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -816,7 +861,13 @@
 				"tags": [
 					"Authors"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"author:read"
+						]
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -836,7 +887,13 @@
 				"tags": [
 					"Authors"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin:create"
+						]
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -868,7 +925,13 @@
 				"tags": [
 					"Authors"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"author:read"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -891,7 +954,13 @@
 				"tags": [
 					"Authors"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin:delete"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -921,7 +990,13 @@
 				"tags": [
 					"Authors"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin:update"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -966,7 +1041,13 @@
 				"tags": [
 					"Authors"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"author:read"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -989,15 +1070,20 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/AuthenticationOutputDTO"
+									"properties": {
+										"token": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"token"
+									],
+									"type": "object"
 								}
 							}
 						}
 					}
 				},
-				"tags": [
-					"Authentication"
-				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
