@@ -2,33 +2,33 @@ import * as express from "express";
 import * as jwt from "jsonwebtoken";
 
 export function expressAuthentication(
-  request: express.Request,
-  securityName: string,
-  scopes?: string[]
+    request: express.Request,
+    securityName: string,
+    scopes?: string[]
 ): Promise<any> {
-  if (securityName === /*clef du securityDefinition */) {
-    const token = //Récupérer le token
+    const JWT_SECRET = process.env.JWT_SECRET;
+    if (securityName === '1') { // clef du securityDefinition
+        const token = 'token'; // Récupérer le token
 
-    return new Promise((resolve, reject) => {
-      if (!token) {
-        reject(/*throw error no token*/);
-      }
-      jwt.verify(
-        token,
-        /*your secret*/,
-        function (err: any, decoded: any) {
-          if (err) {
-            reject(err);
-          } else {
-            if (scopes !== undefined) {
-              //Custom verif
+        return new Promise((resolve, reject) => {
+            if (!token) {
+                return reject(new Error('No token provided'));
             }
-            resolve(decoded);
-          }
-        }
-      );
-    });
-  } else {
-    /* throw error not found securityDefinition*/
-  }
+            jwt.verify(
+                token, JWT_SECRET!,
+                function (err: any, decoded: any) {
+                    if (err) {
+                        return reject(err);
+                    } else {
+                        if (scopes !== undefined) {
+                            // Custom verif
+                        }
+                        return resolve(decoded);
+                    }
+                }
+            );
+        });
+    } else {
+        return Promise.reject(new Error('Security definition not found'));
+    }
 }
