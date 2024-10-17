@@ -26,3 +26,12 @@
     - l'utilisateur peut :
         - tout lire
         - créer un nouveau livre si l'auteur existe déjà mais pas de nouveau exemplaire
+
+
+
+
+
+utilisateur et MDP : 
+admin admin
+manager gerant
+user user

@@ -17,12 +17,10 @@ export class AuthenticationService {
             throw notFound("User");
         }
 
-        // Décoder le mot de passe stocké en base de données
         const decodedPassword = Buffer.from(user.password, "base64").toString(
             "utf-8"
         );
 
-        // Vérifie si le mot de passe est correct
         if (password === decodedPassword) {
             return this.generateJwt(user.username);
         } else {
@@ -41,7 +39,7 @@ export class AuthenticationService {
                 book: ['read', 'create', 'update', 'delete'],
                 bookCollection: ['read', 'create', 'update', 'delete'],
             };
-        } else if (username === 'gerant') {
+        } else if (username === 'manager') {
             permissions = {
                 author: ['read', 'create', 'update'],
                 book: ['read', 'create', 'update'],
