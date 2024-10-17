@@ -1,21 +1,28 @@
-import { Route, Controller, Post, Body } from "tsoa";
-import { AuthenticationInputDTO } from "../dto/authentication.dto";
-import { authService } from "../services/authentication.service";
+import { Controller, Post, Body, Route, Tags } from "tsoa";
+import * as jwt from "jsonwebtoken";
+import { AuthenticationInputDTO, AuthenticationOutputDTO } from "../dto/authentication.dto";
+import { userService } from "../services/user.service";
+import {token} from "morgan";
 
 @Route("auth")
+@Tags("Authentication")
 export class AuthenticationController extends Controller {
   @Post("/")
   public async authenticate(
-    @Body() body: AuthenticationInputDTO
-  ) {
-    const { grant_type, username, password } = body;
-    if (grant_type !== "password") {
-      let error = new Error("Invalid grant_type");
-      (error as any).status = 400;
-      throw error;
-    }
-    const token = await authService.authenticate(username, password);
+      @Body() requestBody: AuthenticationInputDTO
+  ): Promise<AuthenticationOutputDTO> {
+    const { username, password } = requestBody;
+    const user = await userService.validateUser(username, password);
 
-    return { token };
+    if (!user) {
+      throw new Error("Invalid credentials");
+    }
+
+    const JWT_SECRET = process.env.JWT_SECRET!;
+    const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    return {message: "", token };
   }
 }

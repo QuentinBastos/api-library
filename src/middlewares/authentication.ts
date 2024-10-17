@@ -7,26 +7,27 @@ export function expressAuthentication(
     scopes?: string[]
 ): Promise<any> {
     const JWT_SECRET = process.env.JWT_SECRET;
-    if (securityName === '1') { // clef du securityDefinition
-        const token = 'token'; // Récupérer le token
+
+    if (securityName === 'jwt') {
+        const authHeader = request.headers.authorization;
+
+        if (!authHeader) {
+            return Promise.reject(new Error('No authorization header provided'));
+        }
+
+        const token = authHeader.split(' ')[1];
 
         return new Promise((resolve, reject) => {
-            if (!token) {
-                return reject(new Error('No token provided'));
-            }
-            jwt.verify(
-                token, JWT_SECRET!,
-                function (err: any, decoded: any) {
-                    if (err) {
-                        return reject(err);
-                    } else {
-                        if (scopes !== undefined) {
-                            // Custom verif
-                        }
-                        return resolve(decoded);
+            jwt.verify(token, JWT_SECRET!, (err: any, decoded: any) => {
+                if (err) {
+                    return reject(err);
+                } else {
+                    if (scopes) {
+                        // Custom verification logic for scopes
                     }
+                    return resolve(decoded);
                 }
-            );
+            });
         });
     } else {
         return Promise.reject(new Error('Security definition not found'));

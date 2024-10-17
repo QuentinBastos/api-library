@@ -257,6 +257,21 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"AuthenticationOutputDTO": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"token": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"AuthenticationInputDTO": {
 				"properties": {
 					"grant_type": {
@@ -278,7 +293,13 @@
 				"additionalProperties": false
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"jwt": {
+				"type": "apiKey",
+				"in": "header",
+				"name": "Authorization"
+			}
+		}
 	},
 	"info": {
 		"title": "express-typescript",
@@ -310,7 +331,14 @@
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin:*",
+							"user:*"
+						]
+					}
+				],
 				"parameters": []
 			},
 			"post": {
@@ -330,7 +358,14 @@
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin:*",
+							"user:*"
+						]
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -362,7 +397,14 @@
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin:*",
+							"user:*"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -385,7 +427,14 @@
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin:*",
+							"user:*"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -415,7 +464,14 @@
 				"tags": [
 					"Users"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": [
+							"admin:*",
+							"user:*"
+						]
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -968,20 +1024,15 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"token": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"token"
-									],
-									"type": "object"
+									"$ref": "#/components/schemas/AuthenticationOutputDTO"
 								}
 							}
 						}
 					}
 				},
+				"tags": [
+					"Authentication"
+				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
