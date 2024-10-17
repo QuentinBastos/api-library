@@ -331,14 +331,7 @@
 				"tags": [
 					"Users"
 				],
-				"security": [
-					{
-						"jwt": [
-							"admin:*",
-							"user:*"
-						]
-					}
-				],
+				"security": [],
 				"parameters": []
 			},
 			"post": {
@@ -358,14 +351,7 @@
 				"tags": [
 					"Users"
 				],
-				"security": [
-					{
-						"jwt": [
-							"admin:*",
-							"user:*"
-						]
-					}
-				],
+				"security": [],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -397,14 +383,7 @@
 				"tags": [
 					"Users"
 				],
-				"security": [
-					{
-						"jwt": [
-							"admin:*",
-							"user:*"
-						]
-					}
-				],
+				"security": [],
 				"parameters": [
 					{
 						"in": "path",
@@ -427,14 +406,7 @@
 				"tags": [
 					"Users"
 				],
-				"security": [
-					{
-						"jwt": [
-							"admin:*",
-							"user:*"
-						]
-					}
-				],
+				"security": [],
 				"parameters": [
 					{
 						"in": "path",
@@ -464,14 +436,7 @@
 				"tags": [
 					"Users"
 				],
-				"security": [
-					{
-						"jwt": [
-							"admin:*",
-							"user:*"
-						]
-					}
-				],
+				"security": [],
 				"parameters": [
 					{
 						"in": "path",

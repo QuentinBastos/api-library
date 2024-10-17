@@ -6,7 +6,7 @@ export function expressAuthentication(
     securityName: string,
     scopes?: string[]
 ): Promise<any> {
-    const JWT_SECRET = process.env.JWT_SECRET;
+    const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key';
 
     if (securityName === 'jwt') {
         const authHeader = request.headers.authorization;
@@ -23,7 +23,11 @@ export function expressAuthentication(
                     return reject(err);
                 } else {
                     if (scopes) {
-                        // Custom verification logic for scopes
+                        for (let scope of scopes) {
+                            if (!decoded.scopes.includes(scope)) {
+                                return reject(new Error('Insufficient scope'));
+                            }
+                        }
                     }
                     return resolve(decoded);
                 }

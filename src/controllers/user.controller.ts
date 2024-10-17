@@ -19,7 +19,6 @@ import {
 
 @Route("users")
 @Tags("Users")
-@Security("jwt", ["admin:*", "user:*"])
 export class UserController extends Controller {
     // Récupère tous les utilisateurs
     @Get("/")

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es6", // si erreur de config passer en es2021
     "module": "commonjs",
     "outDir": "./build",
     "strict": true,

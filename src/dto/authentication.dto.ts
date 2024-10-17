@@ -1,10 +1,10 @@
 export interface AuthenticationInputDTO {
-  grant_type: string;
-  username: string;
-  password: string;
+    grant_type: string;
+    username: string;
+    password: string;
 }
 
 export interface AuthenticationOutputDTO {
-  message: string;
-  token?: string;
+    message: string;
+    token?: string;
 }
